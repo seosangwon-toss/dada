@@ -1,0 +1,357 @@
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>정다영 고객님 맞춤형 보장 분석</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .report-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 0 40px rgba(0,0,0,0.08);
+            padding-bottom: 100px;
+        }
+        .header-gradient {
+            background: linear-gradient(135deg, #002b5b 0%, #0056b3 100%);
+        }
+        
+        /* Accordion Core Logic */
+        .accordion-item {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid #edf2f7;
+            position: relative;
+        }
+        
+        /* 터치 시 커지는 효과 */
+        .accordion-item.active {
+            transform: scale(1.03);
+            border-color: #0056b3;
+            box-shadow: 0 15px 30px -10px rgba(0, 86, 179, 0.2);
+            z-index: 10;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
+
+        .accordion-content {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .active .accordion-content {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            padding-top: 16px;
+            margin-top: 16px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .inner-content {
+            overflow: hidden;
+        }
+
+        .chevron-icon {
+            transition: transform 0.4s ease;
+        }
+        .active .chevron-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Detail List Styling */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 11px;
+            border-bottom: 1px solid #f8fafc;
+        }
+        .detail-row:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <!-- 상단 헤더 (설계안 데이터 반영) -->
+        <header class="header-gradient p-8 text-white rounded-b-[40px] shadow-lg relative overflow-hidden">
+            <div class="relative z-10">
+                <div class="flex justify-between items-start mb-6">
+                    <div>
+                        <div class="inline-block bg-white/20 backdrop-blur-md px-3 py-1 rounded-full mb-3">
+                            <span class="text-[10px] font-bold tracking-widest uppercase">Verified Proposal</span>
+                        </div>
+                        <h1 class="text-2xl font-bold leading-tight">
+                            정다영 고객님<br>
+                            <span class="text-blue-300">메리츠 The건강한</span> 분석
+                        </h1>
+                        <p class="text-[10px] mt-2 opacity-60">설계번호: 32101308020260507102</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="bg-black/20 rounded-2xl p-4 flex justify-between items-center border border-white/10">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold">서</div>
+                        <div>
+                            <p class="text-[9px] opacity-60">담당 전문가</p>
+                            <p class="text-xs font-bold">서상원 어드바이저</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[9px] opacity-60">분석 기준일</p>
+                        <p class="text-xs font-medium">2026.05.07</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 핵심 요약 -->
+        <section class="px-6 -mt-6 mb-8 relative z-20">
+            <div class="bg-white rounded-3xl p-6 shadow-xl grid grid-cols-3 gap-2 border border-slate-50">
+                <div class="text-center">
+                    <p class="text-[10px] text-slate-400 font-bold mb-1">납입/만기</p>
+                    <p class="text-sm font-black text-slate-800">20년/100세</p>
+                </div>
+                <div class="text-center border-x border-slate-100">
+                    <p class="text-[10px] text-slate-400 font-bold mb-1">건강등급</p>
+                    <p class="text-sm font-black text-blue-600">건강고지형</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-[10px] text-slate-400 font-bold mb-1">월 보험료</p>
+                    <p class="text-sm font-black text-blue-600">105,680원</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 보장 상세 리스트 -->
+        <main class="px-6 space-y-4">
+            <h3 class="text-sm font-black text-slate-900 mb-4 px-1">항목별 상세 보장 내역</h3>
+
+            <!-- 1. 암 진단비 -->
+            <div class="accordion-item bg-white rounded-2xl p-5 cursor-pointer" onclick="toggleAccordion(this)">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center text-red-500">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-800">일반암 진단비</p>
+                            <p class="text-[10px] text-slate-400">유사암 제외 모든 암 보장</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-lg font-black text-slate-900">5,000<span class="text-xs font-medium ml-0.5">만</span></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300 chevron-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="inner-content">
+                        <div class="space-y-2">
+                            <div class="detail-row"><span>일반암 진단비</span><span class="font-bold">5,000만원</span></div>
+                            <div class="detail-row"><span>유사암 진단비 (갑상선/제자리암 등)</span><span class="font-bold">1,000만원</span></div>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-3 leading-relaxed">※ 유방암, 자궁암, 방광암, 전립선암을 소액암이 아닌 일반암으로 분류하여 동일하게 보장합니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 암 통합치료비 (상세내역 강조) -->
+            <div class="accordion-item bg-white rounded-2xl p-5 cursor-pointer shadow-md shadow-purple-50" onclick="toggleAccordion(this)">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-800">암 통합치료비 (비급여)</p>
+                            <p class="text-[10px] text-slate-400">항암/수술 연간 반복 지급</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-lg font-black text-purple-600">연 1<span class="text-xs font-medium ml-0.5">억</span></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300 chevron-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="inner-content">
+                        <div class="bg-purple-50/50 p-3 rounded-xl border border-purple-100 mb-3">
+                            <p class="text-[11px] font-bold text-purple-700 mb-2">비급여 암 치료 세부 보장</p>
+                            <div class="detail-row text-purple-900 italic"><span>중입자 방사선 치료비</span><span class="font-bold">5,000만원</span></div>
+                            <div class="detail-row"><span>표적항암약물허가치료</span><span class="font-bold">3,000만원</span></div>
+                            <div class="detail-row"><span>면역항암약물허가치료</span><span class="font-bold">3,000만원</span></div>
+                            <div class="detail-row"><span>다빈치 로봇 수술</span><span class="font-bold">1,000만원</span></div>
+                            <div class="detail-row"><span>양성자 방사선 치료</span><span class="font-bold">3,000만원</span></div>
+                        </div>
+                        <p class="text-[10px] text-slate-500 leading-relaxed">
+                            암 진단 후 비급여 치료비 합산액이 1천만 원을 넘으면 최대 1억 원까지 구간별로 매년 반복 지급합니다. (1년 미만 50% 감액)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 2대 진단비 (뇌/심장) -->
+            <div class="accordion-item bg-white rounded-2xl p-5 cursor-pointer" onclick="toggleAccordion(this)">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-800">뇌/심장질환 진단비</p>
+                            <p class="text-[10px] text-slate-400">허혈성/뇌혈관 전체 보장</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-lg font-black text-slate-900">각 2,000<span class="text-xs font-medium ml-0.5">만</span></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300 chevron-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="inner-content">
+                        <div class="space-y-1">
+                            <div class="detail-row"><span>뇌혈관질환 진단비</span><span class="font-bold">2,000만원</span></div>
+                            <div class="detail-row"><span>허혈성심장질환 진단비</span><span class="font-bold">2,000만원</span></div>
+                            <div class="detail-row"><span>산정특례대상 진단비 (심/뇌)</span><span class="font-bold">각 500만원</span></div>
+                            <div class="detail-row"><span>특정혈전치료비 (연 1회)</span><span class="font-bold">2,000만원</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 순환계 통합치료비 (상세내역 강조) -->
+            <div class="accordion-item bg-white rounded-2xl p-5 cursor-pointer shadow-md shadow-cyan-50" onclick="toggleAccordion(this)">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center text-cyan-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-800">순환계 통합치료비</p>
+                            <p class="text-[10px] text-slate-400">고가 장비 및 정밀 검사 지원</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-lg font-black text-cyan-700">5,000<span class="text-xs font-medium ml-0.5">만</span></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300 chevron-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="inner-content">
+                        <div class="bg-slate-50 p-3 rounded-xl mb-3">
+                            <p class="text-[11px] font-bold text-slate-700 mb-2">항목별 지급 상세 (연간 1회)</p>
+                            <div class="detail-row"><span>부분체외순환치료(ECMO)</span><span class="font-bold text-blue-600">2,000만원</span></div>
+                            <div class="detail-row"><span>혈전용해치료</span><span class="font-bold">1,000만원</span></div>
+                            <div class="detail-row"><span>종합병원 중환자실 치료</span><span class="font-bold">1,000만원</span></div>
+                            <div class="detail-row"><span>심장/뇌 수술 (회당)</span><span class="font-bold text-blue-600">1,000만원</span></div>
+                            <div class="detail-row"><span>급여 MRI / CT 촬영</span><span class="font-bold">5~10만원</span></div>
+                        </div>
+                        <p class="text-[10px] text-slate-400">※ 뇌졸중이나 심근경색으로 쓰러졌을 때 필수적으로 사용되는 중환자실과 에크모 등의 고가 치료를 정액으로 지원합니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 질병 수술비 -->
+            <div class="accordion-item bg-white rounded-2xl p-5 cursor-pointer" onclick="toggleAccordion(this)">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758L5 19m0-14l4.121 4.121" /></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-800">질병 수술비 (1-5종)</p>
+                            <p class="text-[10px] text-slate-400">매 수술 시마다 반복 지급</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-lg font-black text-slate-900">최대 1,000<span class="text-xs font-medium ml-0.5">만</span></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-300 chevron-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="inner-content">
+                        <table class="w-full text-[11px] text-slate-600">
+                            <tr class="border-b border-slate-50"><td class="py-2">1종 (내시경 등 가벼운 수술)</td><td class="py-2 text-right font-bold">20만원</td></tr>
+                            <tr class="border-b border-slate-50"><td class="py-2">3종 (중등도 수술)</td><td class="py-2 text-right font-bold">100만원</td></tr>
+                            <tr><td class="py-2 font-bold text-slate-800">5종 (심장/뇌 등 대수술)</td><td class="py-2 text-right font-black text-blue-600">1,000만원</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 푸터 메시지 -->
+        <footer class="px-6 mt-12">
+            <div class="bg-slate-900 p-8 rounded-[40px] text-white shadow-2xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <p class="text-[10px] font-bold text-blue-400 mb-2 uppercase tracking-widest">Expert's Opinion</p>
+                    <h4 class="text-lg font-bold mb-4 italic">"치료 비용 리스크를<br>완벽하게 헷지한 설계입니다."</h4>
+                    <p class="text-[12px] leading-relaxed opacity-70 mb-8 font-light">
+                        정다영 고객님, 이 플랜은 단순히 진단비만 주는 과거 방식이 아닙니다. 매년 1억 원까지 나오는 암 통합치료비와 고가의 순환계 장비 치료비가 핵심입니다. 100세까지 가장 든든한 의료 자산이 될 것입니다.
+                    </p>
+                    <button class="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-sm shadow-xl active:scale-[0.98] transition-all">
+                        서상원 전문가와 실시간 상담하기
+                    </button>
+                </div>
+            </div>
+            <p class="text-center text-[10px] text-slate-300 mt-8">Copyright © 2026 Toss Insurance Advisor Seo Sang-won</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleAccordion(element) {
+            const isActive = element.classList.contains('active');
+            
+            // 모든 항목 닫기 (동시에 하나만 열리도록)
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // 클릭한 항목이 닫혀있었다면 열기
+            if (!isActive) {
+                element.classList.add('active');
+                
+                // 열릴 때 상단으로 부드럽게 스크롤
+                setTimeout(() => {
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = element.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 300);
+            }
+        }
+    </script>
+</body>
+</html>
+
+```
